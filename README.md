@@ -1,2 +1,2 @@
 # competitive-programming
-Material com algoritmos e estruturas de dados usados para programação competitiva
+A collection of data structures and algorithms for competitive programming
