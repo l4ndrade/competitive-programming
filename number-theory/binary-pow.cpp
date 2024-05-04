@@ -1,9 +1,10 @@
 #include<bits/stdc++.h>
 using namespace std;
+typedef long long ll;
 
-int binpow(int x, int y)
+ll binpow(ll x, ll y)
 {
-    int res = 1;
+    ll res = 1;
     while (y)
     {
         if(y&1) // If it's odd
@@ -17,7 +18,7 @@ int binpow(int x, int y)
 
 int main()
 {
-    int a, b; cin >> a >> b;
+    ll a, b; cin >> a >> b;
     cout << gcd(a, b) << endl;
 
     return 0;
