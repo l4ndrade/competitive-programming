@@ -2,8 +2,8 @@
 using namespace std;
 typedef long long ll;
 
-const ll MAXN = 10000000; // This should be the maximum N to be calculated 
-const ll MAX = sqrt(MAXN);
+const ll MAXN = 1e7+10; // This should be the maximum N to be calculated 
+const ll MAX = sqrt(MAXN)+10;
 
 vector<bool> prime(MAX+100, true);
 vector<ll> allPrimes; // For calculating bigger primes
@@ -13,7 +13,7 @@ void sieve(ll n) // Sieve of Eratosthenes
 
     for(ll i = 2 ; i <= n  ; i++)
     {
-        if(prime[i] && i*i<= n)
+        if(prime[i] && i<= n)
         {
             for(ll j = i*i ; j <= n ; j += i)
                 prime[j] = false;
@@ -35,6 +35,24 @@ bool isPrime(ll n) // Uses previous algorithm
         if(allPrimes[i]*allPrimes[i] > n) break;
     }
     return true;
+}
+
+vector<ll> factorization(ll n) 
+{
+    vector<ll> res;
+    for (ll d : allPrimes) 
+    {
+        if (d * d > n)
+            break;
+        while (n % d == 0) 
+        {
+            res.push_back(d);
+            n /= d;
+        }
+    }
+    if (n > 1)
+        res.push_back(n);
+    return res;
 }
 
 int main()
