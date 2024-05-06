@@ -2,8 +2,7 @@
 using namespace std;
 typedef long long ll;
 
-const ll MAXN = 1e7+10; // This should be the maximum N to be calculated 
-const ll MAX = sqrt(MAXN)+10;
+const ll MAX = sqrt(10000010)+10; // Insert maximum input 
 
 vector<bool> prime(MAX+100, true);
 vector<ll> allPrimes; // For calculating bigger primes
