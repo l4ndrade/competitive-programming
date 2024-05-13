@@ -2,6 +2,10 @@
 using namespace std;
 typedef long long ll;
 
+/*
+	Binary Indexed Tree for range sum query (PURQ)
+*/
+
 #define lsOne(n) (n&-n)
 struct Bit 
 {

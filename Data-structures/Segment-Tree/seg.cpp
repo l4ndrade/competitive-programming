@@ -2,23 +2,28 @@
 using namespace std;
 typedef long long ll;
 
-const int INF = 0x3f3f3f3f;
+/*
+    Segment Tree for range minimum query
+    tl and tr: boundaries of the current segment
+    l and r: query boundaries
+    NULLVALUE: For minimum, a very high value works
+*/
+
+const int NULLVALUE = 0x3f3f3f3f;
 const int MAXN = 1e5;
 
 struct Seg
 {
-    vector<ll> input; // Original
-    ll seg[4*MAXN]; // Tree
-    ll n; // Size
+    vector<ll> input;
+    ll seg[4*MAXN];
+    ll n;
 
-    // tl and tr are boundaries of the current segment
-    // idx is the current index of the segment tree (starts at 1)
     ll build(int idx, int tl, int tr)
     {
-        if(tl==tr) // The segment is the position on the input array
+        if(tl==tr)
             return seg[idx] = input[tl];
         int tm = (tl+tr)/2;
-        return seg[idx] = min(build(2*idx, tl, tm), build(2*idx+1, tm+1, tr)); // Calls the function for both children of the index and for the two halfs of the current segment
+        return seg[idx] = min(build(2*idx, tl, tm), build(2*idx+1, tm+1, tr));
     }
 
     void build(vector<ll>& v)
@@ -28,10 +33,10 @@ struct Seg
         build(1, 0, n-1);
     }
 
-    ll query(int l, int r, int idx, int tl, int tr) // Returns minimum in range[l, r]
+    ll query(int l, int r, int idx, int tl, int tr)
     {
-        if(r < tl or l > tr) return INF; // If this call is out of the range, returns null element (INF, for minimum)
-        if(l <= tl and tr <= r) return seg[idx]; // If this interval belongs to [l, r], its part of the answer
+        if(r < tl or l > tr) return NULLVALUE;
+        if(l <= tl and tr <= r) return seg[idx];
         
         int tm = tl+(tr-tl)/2;
         return min(query(l, r, 2*idx, tl, tm), query(l, r, 2*idx+1, tm+1, tr));
@@ -55,17 +60,3 @@ struct Seg
         update(i, k, 1, 0, n-1);
     }
 };
-
-int main(){
-
-    ll n = 8;
-    vector<ll> v = {13,3,6,20,18,6,10,4};
-
-    Seg seg;
-    seg.build(v);
-    cout << seg.query(0,7) << endl;
-    cout << seg.query(0,7) << endl;
-
-
-    return 0;
-}
