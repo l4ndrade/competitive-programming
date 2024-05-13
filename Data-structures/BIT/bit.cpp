@@ -2,7 +2,7 @@
 using namespace std;
 typedef long long ll;
 
-#define lsOne(n) n & -n
+#define lsOne(n) (n&-n)
 struct Bit 
 {
 	int n;
@@ -14,12 +14,13 @@ struct Bit
         n = _n;
         bit.assign(n+1, 0);
     }
+	
 	Bit(vector<ll>& v) 
     {
         n = v.size();
         bit.assign(n+1, 0);
         
-		for (int i = 1; i <= n; i++) 
+		for (int i = 1 ; i <= n ; i++) 
         {
 			bit[i] += v[i - 1];
 			int j = i + lsOne(i);
@@ -28,22 +29,22 @@ struct Bit
 		}
 	}
 
-	void add(int i, ll k) 
+	void update(int i, ll k) 
     {
-		for (i++; i <= n; i += lsOne(i)) 
+		for (i++ ; i <= n ; i += lsOne(i)) 
             bit[i] += k;
 	}
 
-	ll rsq(int r) 
+	ll query(int r) 
     {
 		ll sum = 0;
-		for (r++; r; r -= lsOne(r)) 
+		for (r++ ; r ; r -= lsOne(r)) 
             sum += bit[r];
 		return sum;
 	}
 
-	ll rsq(int l, int r) 
+	ll query(int l, int r) 
     {
-		return rsq(r) - rsq(l - 1); 
+		return query(r) - query(l - 1); 
 	}
 };
