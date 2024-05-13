@@ -2,7 +2,7 @@
 using namespace std;
 typedef long long ll;
 
-#define lsOne(n) (n&-n)
+#define lsOne(n) n & -n
 struct Bit 
 {
 	int n;
