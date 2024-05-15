@@ -1,94 +1,65 @@
 #include<bits/stdc++.h>
 using namespace std;
+typedef long long ll;
 
-#define INF 0x3f3f3f3f
+/*
+    This implementation finds minimum path from start to end or from start to every other node
 
-void dijkstra(vector<pair<int, int>>* adj, int n, int start, int end, int* distance) // Finds only the distance, not the path itself
+    If end is passed to the function, it only finds the path from start to end
+
+    c stands for current (cNode = current node)
+    n stands for neighbor (nNode = neighbor node)
+*/
+
+#define INFLL 0x3f3f3f3f3f3f3f3f
+
+int n; // Number of nodes
+vector<ll> d; // Distance from start to each node
+vector<int> p; // Parent of each node;
+
+void dijkstra(vector<pair<ll, int>>* adj, int n, int start=0, int end=-1)
 {
-    for(int i = 0 ; i < n ; i++) distance[i] = INF; // Set all distances as INF
-
-    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq; // Minimum priority queue <distance, node>
-    distance[start] = 0; // Sets the distance from starting node to the starting node as 0 
-    pq.push({0, start}); // We beguin visiting the starting node
-
+    d.assign(n, INFLL);
+    p.assign(n, -1);
+    d[start] = 0;
+ 
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+ 
+    pq.push({0, start});
+ 
     while (!pq.empty())
     {
-        int currDist = pq.top().first, currNode = pq.top().second; 
+        ll cDist = pq.top().first;
+        int cNode = pq.top().second;
+ 
         pq.pop();
-
-        //if(currNode == end) return; // Makes the bfs faster if finding the path to end is all you want
-        if(currDist > distance[currNode]) continue; // Mean a better path was already found
-
-        for(auto neighbor: adj[currNode])
+ 
+        if(cDist > d[cNode]) continue;
+        if(cNode == end) return;
+ 
+        for(auto neighbor: adj[cNode])
         {
-            int neighborDist = neighbor.first, neighborNode = neighbor.second;
-            if(distance[currNode]+neighborDist < distance[neighborNode])  // Visits all nodes
+            ll nDist = neighbor.first;
+            int nNode = neighbor.second;
+ 
+            if(d[cNode]+nDist < d[nNode])
             {
-                distance[neighborNode] = distance[currNode]+neighborDist;
-                pq.push({distance[neighborNode], neighborNode});
+                p[nNode] = cNode;
+                d[nNode] = d[cNode] + nDist; 
+                pq.push({d[nNode], nNode});
             }
         }
     }
 }
-
-void dijkstra(vector<pair<int, int>>* adj, int n, int start, int end, int* distance, int* parent) // Finds the distance and the path
+ 
+vector<int> restore_path(int start, int end)
 {
-    for(int i = 0 ; i < n ; i++) distance[i] = INF; // Set all distances as INF
-    for(int i = 0 ; i < n ; i++) parent[i] = -1; // Sets all parents as -1 (not valid)
-        
-    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq; // Minimum priority queue <distance, node>
-    distance[start] = 0; // Sets the distance from starting node to the starting node as 0 
-    pq.push({0, start}); // We beguin visiting the starting node
-
-    while (!pq.empty())
+    vector<int> res;
+    for(int node = end ; node != start ; node = p[node])
     {
-        int currDist = pq.top().first, currNode = pq.top().second; 
-        pq.pop();
-
-        //if(currNode == end) return; // Makes the bfs faster if finding the path to end is all you want
-        if(currDist > distance[currNode]) continue; // Mean a better path was already found
-
-        for(auto neighbor: adj[currNode])
-        {
-            int neighborDist = neighbor.first, neighborNode = neighbor.second;
-            if(distance[currNode]+neighborDist < distance[neighborNode])  // Visits all nodes
-            {
-                parent[neighborNode] = currNode;
-                distance[neighborNode] = distance[currNode]+neighborDist;
-                pq.push({distance[neighborNode], neighborNode});
-            }
-        }
+        res.push_back(node);
     }
-}
-
-int main()
-{    
-    int n, m, a, b, c;
-    cin >> n >> m;
-    vector<pair<int, int>> adj[n];
-    for(int i = 0 ; i < m ; i++)
-    {
-        cin >> a >> b >> c;
-        adj[a].push_back({c, b});
-        adj[b].push_back({c, a});
-    }
-    int distance[n], parents[n], end=n-1, start=0;
-    dijkstra(adj, n, start, end, distance, parents);
-     
-    vector<int> path;
-    if(distance[end] != INF) // Checks if there is a path
-    {
-        for(int i = end ; i != -1 ; i = parents[i])
-        {
-            path.push_back(i);
-        }
-        reverse(path.begin(), path.end());
-        for(auto node: path)
-            cout << node << " ";
-        cout << endl;
-    }
-    else
-        cout << -1 << endl;
-
-    return 0;
+    res.push_back(start);
+    reverse(res.begin(), res.end());
+    return res;
 }
