@@ -62,6 +62,6 @@ struct Seg
 
     void update(int i, ll k) 
     {
-        update(i, k, 1, 0, n-1);
+        update(1, 0, n-1, i, k);
     }
 };
