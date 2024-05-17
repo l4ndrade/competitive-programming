@@ -13,7 +13,6 @@ typedef long long ll;
 
 #define INFLL 0x3f3f3f3f3f3f3f3f
 
-int n; // Number of nodes
 vector<ll> d; // Distance from start to each node
 vector<int> p; // Parent of each node;
 
@@ -56,9 +55,7 @@ vector<int> restore_path(int start, int end)
 {
     vector<int> res;
     for(int node = end ; node != start ; node = p[node])
-    {
         res.push_back(node);
-    }
     res.push_back(start);
     reverse(res.begin(), res.end());
     return res;
