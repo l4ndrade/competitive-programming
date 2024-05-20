@@ -22,7 +22,7 @@ void dijkstra(vector<pair<ll, int>>* adj, int n, int start=0, int end=-1)
     p.assign(n, -1);
     d[start] = 0;
  
-    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+    priority_queue<pair<ll, int>, vector<pair<ll, int>>, greater<pair<ll, int>>> pq;
  
     pq.push({0, start});
  
