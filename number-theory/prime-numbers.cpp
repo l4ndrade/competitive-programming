@@ -4,15 +4,16 @@ typedef long long ll;
 
 const ll MAX = sqrt(10000010)+10; // Insert maximum input 
 
-vector<bool> prime(MAX+100, true);
+vector<bool> prime;
 vector<ll> allPrimes; // For calculating bigger primes
-void sieve(ll n) // Sieve of Eratosthenes
+void sieve(int n) // Sieve of Eratosthenes
 {
+    prime.assign(n+10, true);
     prime[0] = prime[1] = false;
 
     for(ll i = 2 ; i <= n  ; i++)
     {
-        if(prime[i] && i<= n)
+        if(prime[i])
         {
             for(ll j = i*i ; j <= n ; j += i)
                 prime[j] = false;
@@ -36,22 +37,20 @@ bool isPrime(ll n) // Uses previous algorithm
     return true;
 }
 
-vector<ll> factorization(ll n) 
+void factorization(ll n, vector<int>& factors) 
 {
-    vector<ll> res;
-    for (ll d : allPrimes) 
+    for (int d : allPrimes) 
     {
         if (d * d > n)
             break;
         while (n % d == 0) 
         {
-            res.push_back(d);
+            factors.push_back(d);
             n /= d;
         }
     }
     if (n > 1)
-        res.push_back(n);
-    return res;
+        factors.push_back(n);
 }
 
 int main()
