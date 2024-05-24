@@ -39,7 +39,7 @@ bool isPrime(ll n) // Uses previous algorithm
 
 void factorization(ll n, vector<int>& factors) 
 {
-    for (int d : allPrimes) 
+    for (ll d : allPrimes) 
     {
         if (d * d > n)
             break;
