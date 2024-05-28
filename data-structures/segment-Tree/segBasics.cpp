@@ -36,13 +36,12 @@ struct Seg
 
     ll query(int node, int tl, int tr, int l, int r)
     {
-        if(l > r)
+        if(tr < l or tl > r)
             return NULLVALUE;
-        if(l == tl and r == tr)
+        if(tr <= r and tl >= l)
             return seg[node];
         int tm = tl+(tr-tl)/2;
-        return min(query(2*node, tl, tm, l, min(r, tm)), query(2*node+1, tm+1, tr, max(l, tm+1), r));
-
+        return min(query(2*node, tl, tm, l, r), query(2*node+1, tm+1, tr, l, r));
     }
 
     ll query(int l, int r)
@@ -52,8 +51,8 @@ struct Seg
 
     ll update(int node, int tl, int tr, int i, int k)
     {
-        if(tl > i or tr < i)
-            return NULLVALUE;
+        if(i < tl or i > tr)
+            return seg[node];
         if(tl == tr)
             return seg[node] = k;
         int tm = tl+(tr-tl)/2;
