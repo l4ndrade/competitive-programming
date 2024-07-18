@@ -13,8 +13,8 @@ typedef long long ll;
 
 #define INFLL 0x3f3f3f3f3f3f3f3f
 
-vector<ll> d; // Distance from start to each node
-vector<int> p; // Parent of each node;
+vector<ll> d;
+vector<int> p;
 
 void dijkstra(vector<pair<ll, int>>* adj, int n, int start=0, int end=-1)
 {
