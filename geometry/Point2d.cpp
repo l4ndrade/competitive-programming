@@ -1,3 +1,5 @@
+#include<bits/stdc++.h>
+using namespace std;
 // This is a struct representing Points and Vectors in 2d
 
 struct Point2d
@@ -18,6 +20,9 @@ struct Point2d
     // Comparison
     bool operator==(Point2d other) {return x==other.x and y==other.y;}
     bool operator!=(Point2d other) {return !(*this==other);}
+
+    // cout for debug
+    friend ostream &operator<<(ostream &os, Point2d const &p) {return os << "(" << p.x << ", " << p.y << ")";}
 };
 
 // returns vector from a to b
@@ -39,3 +44,9 @@ v^u < 0 -> v rotates clockwise to meet u.
 
 // Returns vec's norm^2
 double norm2(Point2d vec){return vec.x*vec.x + vec.y*vec.y;}
+
+// Returns if p is between p1 and p2 but NOT equal to p1 or p2
+bool between(Point2d p1, Point2d p2, Point2d p)
+{
+    return collinear(p1, p2, p) and toVector(p, p1)*toVector(p, p2) < 0;
+}

@@ -26,6 +26,6 @@ struct newFloat
     template<typename T>
     bool operator<=(const T& other) {return (*this==other) or *this < other;}
 
-    friend std::ostream &operator<<(std::ostream &os, newFloat const &n) {return os << n.data;}
+    friend ostream &operator<<(ostream &os, newFloat const &n) {return os << n.data;}
 };
 
