@@ -1,16 +1,22 @@
 #include<bits/stdc++.h>
 using namespace std;
-typedef long double ld;
 
 // Float, but with more precison (simple implementation)
 
-ld eps = 1e-7;
+double eps = 1e-7;
+
+int comp(double a, double b)
+{
+    if(fabs(a-b) < eps) return 0;
+    else if(a > b) return 1;
+    else return -1; 
+}
 
 struct newFloat
 {
-    ld data;
+    double data;
     
-    newFloat(ld data): data(data) {}
+    newFloat(double data): data(data) {}
     newFloat() {}
 
     template<typename T>
