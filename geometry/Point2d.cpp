@@ -1,7 +1,8 @@
 #include<bits/stdc++.h>
 using namespace std;
-// This is a struct representing Points and Vectors in 2d
-
+/*
+    This is a struct representing Points and Vectors in 2d
+*/
 struct Point2d
 {
     double x, y;

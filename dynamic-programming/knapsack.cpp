@@ -1,6 +1,10 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+/*
+    Famous knapsack problem, this solution uses dp to find the best subset of items possible in O(n*sum)
+*/
+
 #define value first
 #define weight second
 vector<pair<int, int>> v; // knapsack
@@ -27,9 +31,6 @@ int main()
         cin >> v[i].value >> v[i].weight;
         sum+=v[i].value;
     }
-
     dp.resize(n+1, vector<int>(sum+1, -1));
-    
     cout << maximize(n, maxCapacity) << endl;
-
 }

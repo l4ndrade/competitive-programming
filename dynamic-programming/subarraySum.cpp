@@ -1,7 +1,10 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-// Finds greatest subarray sum
+/*
+    Kadane's algorithm to find greatest sum in a subarray of v 
+*/
+
 int kadane(vector<int>& v)
 {
     int curr = 0; // Current sum
@@ -18,7 +21,6 @@ int kadane(vector<int>& v)
             i = last;
             j = idx;
         }
-
         if(curr < 0)
         {
             last = i+1;
@@ -32,9 +34,6 @@ int main()
 {
     vector<int> v(5);
     for(int i = 0 ; i < 5 ; i++)
-    {
         cin >> v[i];
-    }
-
     cout << kadane(v) << endl;
 }

@@ -1,6 +1,12 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+/*
+    Longes common subsequence in 2 strings
+    ex: bride bridge
+        11111 111101 -> 5
+*/
+
 string a, b;
 int n, m;
 

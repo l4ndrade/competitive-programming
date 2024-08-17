@@ -1,6 +1,10 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+/*
+    dp aproach to get the number of ways we can get to value n with a set of coins (O(n*m) where n is the value and m the size of the coin set)
+*/
+
 vector<int> c; // All coin values
 vector<int> ways; // Ways to get to value i
 
@@ -19,7 +23,6 @@ int main()
     c.resize(n);
     for(int i = 0 ; i < n ; i++)
         cin >> c[i];
-    
     ways.resize(value+1, 0);
     fill();
     cout << ways[value] << endl;

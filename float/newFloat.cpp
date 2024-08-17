@@ -1,9 +1,9 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-// Float, but with more precison (simple implementation)
+// Float, but more assertive
 
-double eps = 1e-7;
+double eps = 1e-9;
 
 int comp(double a, double b)
 {

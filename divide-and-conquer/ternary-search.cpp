@@ -8,8 +8,8 @@ double f(double x)
 
 double tsearch(double l, double r) // Finds minimum in continuous interval
 {
-    double eps = 1e-9; //set the error limit here
-    double m1, m2; // 2 separation points
+    double eps = 1e-9;
+    double m1, m2;
 
     while (fabs(r-l) > eps)
     {
@@ -27,8 +27,6 @@ double tsearch(double l, double r) // Finds minimum in continuous interval
 
 int main()
 {
-
     cout << tsearch(0, 1000) << endl;
-    
     return 0;
 }

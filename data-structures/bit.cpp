@@ -39,7 +39,7 @@ struct Bit
             bit[i] += k;
 	}
 
-	ll query(int r) 
+	ll query(int r)
     {
 		ll sum = 0;
 		for (r++ ; r ; r -= lsOne(r)) 

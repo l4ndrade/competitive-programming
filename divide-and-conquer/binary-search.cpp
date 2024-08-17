@@ -1,61 +1,49 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-bool f(int x)
-{
-    return x>=30; // FFFFFTTTTT (first T: x = 30)
-}
+bool ok(int x){return x>=30;}
+bool okc(double x){return x >= 30.51122;}
 
-bool fc(double x)
-{
-    return x>=30.51122; // FFFFFFTTTTT (first T: x = 30.5)
-}
-
-// ALL FUNCTIONS USE THE INTERVAL [l, r] 
-
-// bsearchANS uses binary search to find answers minimizing the calls os f
-
-// Using this function but with f2(x){return !f(x)} finds the first false
-int bsearchANS1(int l, int r) // Finds first True in a function (FFFFFTTT)
+int firstTrue(int l, int r)
 {
     int mid;
     while (l<r)
     {
-        mid = l+(r-l)/2; // Avoids overflow
-
-        if(f(mid))
+        mid = l+(r-l)/2;
+        
+        if(ok(mid))
             r = mid;
         else
             l = mid+1;
     }
 
-    if(!f(l)) // [l, r] is all False
+    if(!ok(l)) // [l, r] is all False
         return -1;
     else
         return l; 
 }
+
 // Using this function but with f2(x){return !f(x)} finds the last true
-int bsearchANS2(int l, int r) // Finds last False in a function (FFFFFTTT)
+int lastFalse(int l, int r) // Finds last False in a function (FFFFFTTT)
 {
     int mid;
     while (l<r)
     {
         mid = l+(r-l+1)/2; // +1 so it rounds up
         
-        if(f(mid))
+        if(ok(mid))
             r = mid-1;
         else
             l = mid;
     }
 
-    if(f(l)) // [l, r] is all True
+    if(ok(l)) // [l, r] is all True
         return -1;
     else
         return l; 
-    
 }
 
-double bsearchCON1(double l, double r) // Finds first true in a continuous interval (FFFFTTT)
+double firstTrue(double l, double r) // Finds first true in a continuous interval (FFFFTTT)
 {
     double mid;
 
@@ -63,13 +51,13 @@ double bsearchCON1(double l, double r) // Finds first true in a continuous inter
     for(int i = 0 ; i < p ; i++)
     {
         mid = l+(r-l)/2;
-        if(fc(mid))
+        if(okc(mid))
             r = mid;
         else
             l = mid;
     }
 
-    if(!f(l)) // [l, r] is all False
+    if(!okc(l)) // [l, r] is all False
         return -1;
     else
         return l;
@@ -77,9 +65,9 @@ double bsearchCON1(double l, double r) // Finds first true in a continuous inter
 
 int main()
 {
-    cout << bsearchANS1(0, 50) << endl;
-    cout << bsearchANS2(0, 50) << endl;
-    cout << bsearchCON1(0, 50) << endl;
+    cout << firstTrue(0, 50) << endl;
+    cout << lastFalse(0, 50) << endl;
+    cout << firstTrue((double)0, (double)50) << endl;
     
     return 0;
 }
