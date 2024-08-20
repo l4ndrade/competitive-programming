@@ -1,35 +1,34 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-vector<int> color;
-vector<vector<int>> adj;
-vector<bool> visited;
+/*
+    DFS used to check if a graph is bipartite
+*/ 
 
-void dfs(int curr, bool& isBipartite)
+vector<int> color; // colors are 0 or 1 and -1 means it is not colored yet
+vector<vector<int>> adj;
+
+bool colorize(int curr, int value) // Tries to bipart the component, returns if it could do it
 {
-    if(visited[curr]) return;
-    visited[curr] = true;
+    color[curr] = value;
     for(auto e: adj[curr])
     {
-            if(color[e] == -1)
-            {
-                color[e] = color[curr] == 0 ? 1 : 0;
-                dfs(e, isBipartite);
-            }
-            else if(color[e] == color[curr])
-            {
-                // ends the executuion as soon as possible
-                isBipartite = false;
-                visited.assign(visited.size(), true);
-                return;
-            }
+        if(color[e] == color[curr]) // Neighboor with the same color -> not bipartite
+            return false;
+        if(color[e] == -1)
+        {
+            color[e] = value == 0 ? 1 : 0;
+            if(!colorize(e, !value))
+                return false;
+        }
     }
+    return true;
 }
 
 bool isBipartite() // Runs a dfs starting in every node (every component needs to be searched)
 {
-    bool res;
     for(int i = 0 ; i < adj.size() ; i++)
-        dfs(i, res);
-    return res;
+        if(color[i] != -1 and !colorize(i, 0))
+            return false;
+    return true;
 }

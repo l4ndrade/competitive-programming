@@ -8,37 +8,32 @@ typedef long long ll;
     returns total weight
 */
 
-vector<vector<pair<ll, int>>> adj;
+vector<vector<pair<int, ll>>> adj; // <node, weight>
 
 ll prim(int start)
 {
     int n = adj.size();
-    ll totalWeight = 0; 
-    int numUsed = 0; // Number of nodes used
-    vector<bool> used(n, false);
 
+    ll totalWeight = 0; 
+    int numTaken = 0; // Number of nodes taken
+
+    vector<bool> taken(n, false); // Stores for every node, if it was taken
     priority_queue<pair<ll, int>, vector<pair<ll, int>>, greater<pair<ll, int>>> pq;
     pq.push({0, start});
 
-    while (pq.size() and numUsed < n)
+    while (!pq.empty() and numTaken < n)
     {
-        ll dist = pq.top().first, curr = pq.top().second; pq.pop();
+        auto [w1, u] = pq.top(); pq.pop();
 
-        if(used[curr]) continue;
+        if(taken[u]) continue;
 
-        used[curr] = true;
-        numUsed++;
-        totalWeight += dist;
+        taken[u] = true;
+        numTaken++;
+        totalWeight += w1;
 
-        for(auto e: adj[curr])
-        {
-            ll distToNei, nei;
-            distToNei = e.first;
-            nei = e.second;
-
-            if(!used[nei])
-                pq.push({distToNei, nei});
-        }
+        for(auto [v, w2]: adj[u])
+            if(!taken[v])
+                pq.push({w2, v});
     }
 
     return totalWeight;

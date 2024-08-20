@@ -40,47 +40,46 @@ typedef long long ll;
 
 vector<ll> d;
 vector<int> p;
-vector<vector<pair<ll, int>>> adj2;
+vector<vector<pair<int, ll>>> wadj;
 
 void dijkstra(int start=0, int end=-1)
 {
-    int n = adj2.size();
+    int n = wadj.size();
+
     d.assign(n, INFLL);
     p.assign(n, -1);
-    d[start] = 0;
  
     priority_queue<pair<ll, int>, vector<pair<ll, int>>, greater<pair<ll, int>>> pq;
  
+    d[start] = 0;
     pq.push({0, start});
  
     while (!pq.empty())
     {
-        ll dist = pq.top().first; int curr = pq.top().second; pq.pop();
+        auto [w1, u] = pq.top(); pq.pop(); 
+        
+        if(w1 > d[u]) continue;
+        if(u == end) return;
  
-        if(dist > d[curr]) continue;
-        if(curr == end) return;
- 
-        for(auto e: adj2[curr])
+        for(auto [v, w2]: wadj[u])
         {
-            ll neiDist = e.first; int nei = e.second;
- 
-            if(d[curr]+neiDist < d[nei])
+
+            if(d[u]+w2 < d[v])
             {
-                p[nei] = curr;
-                d[nei] = d[curr] + neiDist; 
-                pq.push({d[nei], nei});
+                p[v] = u;
+                d[v] = d[u] + w2; 
+                pq.push({d[v], v});
             }
         }
     }
 }
 
-vector<int> restore_path(int start, int end)
+void restore_path(int start, int end, vector<int>& res)
 {
-    vector<int> res;
-    for(int node = end ; node != start ; node = p[node])
-        res.push_back(node);
+    res.clear();
+    for(int u = end ; u != start ; u = p[u])
+        res.push_back(u);
     
     res.push_back(start);
     reverse(res.begin(), res.end());
-    return res;
 }
