@@ -10,7 +10,6 @@ typedef long long ll;
 struct Bit 
 {
 	int n;
-
 	vector<ll> bit;
 
 	Bit(int _n=0)

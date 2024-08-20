@@ -23,7 +23,7 @@ int kadane(vector<int>& v)
         }
         if(curr < 0)
         {
-            last = i+1;
+            last = idx+1;
             curr = 0;
         }
     }

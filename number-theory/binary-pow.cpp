@@ -2,7 +2,7 @@
 using namespace std;
 typedef long long ll;
 
-ll binpow(ll x, ll y)
+ll binpow(ll x, ll y) // x^y
 {
     ll res = 1;
     while (y)
@@ -19,7 +19,7 @@ ll binpow(ll x, ll y)
 int main()
 {
     ll a, b; cin >> a >> b;
-    cout << gcd(a, b) << endl;
+    cout << binpow(a, b) << endl;
 
     return 0;
 }

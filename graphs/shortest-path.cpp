@@ -34,7 +34,6 @@ void bfs(int start=0, int end=-1)
     }
 }
 
-
 typedef long long ll;
 #define INFLL 0x3f3f3f3f3f3f3f3f
 

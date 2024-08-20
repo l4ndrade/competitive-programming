@@ -14,7 +14,6 @@ ll lcm(ll a, ll b)
     return a/gcd(a, b)*b;
 }
 
-
 int main()
 {
     ll a, b; cin >> a >> b;
