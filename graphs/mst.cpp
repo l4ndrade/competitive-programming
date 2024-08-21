@@ -10,7 +10,7 @@ typedef long long ll;
 
 vector<vector<pair<int, ll>>> adj; // <node, weight>
 
-ll prim(int start)
+ll prim(int start=0)
 {
     int n = adj.size();
 
