@@ -8,11 +8,12 @@ using namespace std;
 vector<int> c; // All coin values
 vector<int> ways; // Ways to get to value i
 
-void fill()
+void fill(int n) // Fill the interval [0, n] with the results
 {
+    ways.assign(n+1, 0);
     ways[0] = 1;
     for(auto coin: c)
-        for(int i = 0 ; i+coin <= ways.size() ; i++)
+        for(int i = 0 ; i+coin <= n ; i++)
             if(ways[i])
                 ways[i+coin] += ways[i];
 }
@@ -23,7 +24,6 @@ int main()
     c.resize(n);
     for(int i = 0 ; i < n ; i++)
         cin >> c[i];
-    ways.resize(value+1, 0);
-    fill();
+    fill(value);
     cout << ways[value] << endl;
 }

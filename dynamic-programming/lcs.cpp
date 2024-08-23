@@ -2,7 +2,7 @@
 using namespace std;
 
 /*
-    Longes common subsequence in 2 strings
+    Longest common subsequence in 2 strings
     ex: bride bridge
         11111 111101 -> 5
 */
