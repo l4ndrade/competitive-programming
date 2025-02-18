@@ -1,34 +1,39 @@
 #include<bits/stdc++.h>
 using namespace std;
 #define INF 0x3f3f3f3f
+
 // Max flow using Edmonds-Karp algorithm
 
-int n;
-vector<vector<int>> capacity;
+vector<vector<int>> cap;
 vector<vector<int>> adj;
 
+// Searches for augmenting path
 int bfs(int s, int t, vector<int>& parent) 
 {
     parent.assign(parent.size(), -1);
-    parent[s] = -2;
-    queue<pair<int, int>> q;
+    parent[s] = s; // No parent
+
+    queue<pair<int, int>> q; // {vertex, flow}
     q.push({s, INF});
 
-    while (!q.empty()) 
+    while (q.size()) 
     {
-        int cur = q.front().first;
-        int flow = q.front().second;
-        q.pop();
+        int curr, flow; // Vertex, flow
+        curr = q.front().first; flow = q.front().second; q.pop();
 
-        for (int next : adj[cur]) 
+        for (auto next: adj[curr])
         {
-            if (parent[next] == -1 && capacity[cur][next]) 
+            // For each not visited vertex with cap > 0 
+            if (parent[next] == -1 and cap[curr][next]) 
             {
-                parent[next] = cur;
-                int new_flow = min(flow, capacity[cur][next]);
-                if (next == t)
-                    return new_flow;
-                q.push({next, new_flow});
+                parent[next] = curr;
+
+                int path_flow = min(flow, cap[curr][next]);
+
+                if (next == t) // Found the augmenting path
+                    return path_flow;
+                
+                q.push({next, path_flow});
             }
         }
     }
@@ -36,22 +41,23 @@ int bfs(int s, int t, vector<int>& parent)
     return 0;
 }
 
-int maxflow(int s, int t) 
+int maxflow(int s, int t, int n) 
 {
-    int flow = 0;
+    int flow = 0, path_flow;
     vector<int> parent(n);
-    int new_flow;
 
-    while (new_flow = bfs(s, t, parent)) 
+    while (path_flow = bfs(s, t, parent)) 
     {
-        flow += new_flow;
-        int cur = t;
-        while (cur != s) 
+        int curr = t;
+        flow += path_flow;
+
+        // Update capacities
+        while (curr != s) 
         {
-            int prev = parent[cur];
-            capacity[prev][cur] -= new_flow;
-            capacity[cur][prev] += new_flow;
-            cur = prev;
+            int prev = parent[curr];
+            cap[prev][curr] -= path_flow; // Direct
+            cap[curr][prev] += path_flow; // Reverse
+            curr = prev;
         }
     }
 

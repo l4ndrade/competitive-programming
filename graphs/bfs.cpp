@@ -11,9 +11,7 @@ vector<vector<int>> adj;
 
 void bfs(int start=0, int end=-1)
 {
-    int n = adj.size();
-    d.assign(n, INF);
-    p.assign(n, -1);
+    int n = adj.size(); d.assign(n, INF); p.assign(n, -1);
 
     d[start] = 0;
 
