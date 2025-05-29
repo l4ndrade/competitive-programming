@@ -19,7 +19,11 @@ void tarjan(int u, int p)
     {
         
         if(tin[v] != -1) // Visited
+        {
             low[u] = min(low[u], tin[v]); // Check if v has lower tin
+            // if(tin[v] < tin[u]) // v já visitado é ancestral (já verificamos que também não é o pai)
+            //  back_edges.insert({min(u, v), max(u, v)}); // (tem que verificar se essa lógica não visita a back edge duas vezes)
+        }
         else // Not visited
         {
             tarjan(v, u);
