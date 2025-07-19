@@ -1,21 +1,25 @@
 #include<bits/stdc++.h>
 using namespace std;
 typedef long long ll;
+#define INFLL 0x3f3f3f3f3f3f3f3f
 
 /*
-    Segment Tree for range minimum query just like the one from segBasics.cpp, but finds minimum and counts it appears
+    Segment Tree for range minimum query counting occurances
 */
 
-struct Node // Representa um vértice na árvore
+struct Node
 {
-    ll val; // Valor
-    ll occ; // Número de ocorrências
+    ll val, occ;
+
+    Node(ll val): val(val), occ(1) {} // Constrói a partir de 1 item
+    Node(ll val, ll occ): val(val), occ(occ) {} // Constroi a partir dos parametros
+    Node() {}
 };
 
-const int NULLVALUE = 0x3f3f3f3f; // Elemento neutro da operação (nesse caso min(x, INF) = x sempre)
+const Node NULLNODE = {INFLL, 0}; // Nodo de elemento neutro
 
 // Combina 2 vértices filhos em um vértice pai
-Node combine(Node a, Node b) // Combina 2 vértices filhos em um vértice pai
+Node combine(Node a, Node b)
 {
     if(a.val < b.val)
         return {a.val, a.occ};
@@ -34,7 +38,7 @@ struct Seg
     Node build(int node, int tl, int tr)
     {
         if(tl == tr) // Se o range é 1, retorna a posicao
-            return seg[node] = {input[tl], 1};
+            return seg[node] = Node(input[tl]);
 
         int tm = (tl+tr)/2;
 
@@ -54,7 +58,7 @@ struct Seg
     Node query(int node, int tl, int tr, int l, int r)
     {
         if(l > r)
-            return {NULLVALUE, 0};
+            return NULLNODE;
         if(l == tl and r == tr)
             return seg[node];
 
@@ -72,9 +76,9 @@ struct Seg
     Node update(int node, int tl, int tr, int i, ll k)
     {
         if(tl > i or tr < i)
-            return {NULLVALUE, 0};
+            return NULLNODE;
         if(tl == tr)
-            return seg[node] = {k, 1};
+            return seg[node] = Node(k);
         int tm = tl+(tr-tl)/2;
         return seg[node] = combine(update(2*node, tl, tm, i, k), update(2*node+1, tm+1, tr, i, k));
     }
